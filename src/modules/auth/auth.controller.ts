@@ -59,7 +59,45 @@ const inviteUser = async (req: Request, res: Response) => {
   }
 };
 
+const registerViaInvite = async (req: Request, res: Response) => {
+  const { token, name, password } = req.body;
+  try {
+    if (!token || !name || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Token, name and password are required",
+      });
+    }
+
+    const result = await authService.registerViaInvite({
+      token,
+      name,
+      password,
+    });
+
+    if (!result.success) {
+      let statusCode = 500;
+
+      if (result.type === "not-found") {
+        statusCode = 404;
+      }
+
+      return res.status(statusCode).json(result);
+    }
+
+    return res.status(200).json(result);
+  } catch (error) {
+    console.log("Failed to register user", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
 export const authController = {
   loginUser,
   inviteUser,
+  registerViaInvite,
 };

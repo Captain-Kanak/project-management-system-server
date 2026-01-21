@@ -13,6 +13,6 @@ router.post(
   authController.inviteUser,
 );
 
-// router.post("/register-via-invite");
+router.post("/register-via-invite", authController.registerViaInvite);
 
 export { router as authRouter };

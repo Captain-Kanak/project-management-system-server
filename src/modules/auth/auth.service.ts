@@ -92,7 +92,7 @@ const inviteUser = async ({
 }) => {
   try {
     const token = crypto.randomBytes(32).toString("hex");
-    const hashedToken = await bcrypt.hash(token, 10);
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
     await prisma.invite.create({
       data: {
@@ -121,7 +121,83 @@ const inviteUser = async ({
   }
 };
 
+const registerViaInvite = async ({
+  token,
+  name,
+  password,
+}: {
+  token: string;
+  name: string;
+  password: string;
+}) => {
+  try {
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+    const invite = await prisma.invite.findUnique({
+      where: {
+        token: hashedToken,
+        expiresAt: { gt: new Date() },
+        acceptedAt: null,
+      },
+      select: {
+        email: true,
+        role: true,
+        createdAt: true,
+      },
+    });
+
+    if (!invite) {
+      return {
+        success: false,
+        message: "Invalid invite token",
+        type: "not-found",
+      };
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email: invite.email,
+        password: hashedPassword,
+        role: invite.role,
+        invitedAt: invite.createdAt,
+      },
+    });
+
+    await prisma.invite.update({
+      where: {
+        token: hashedToken,
+      },
+      data: {
+        acceptedAt: new Date(),
+      },
+    });
+
+    return {
+      success: true,
+      message: "User registered successfully",
+      data: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    };
+  } catch (error) {
+    console.log("Failed to register user", error);
+
+    return {
+      success: false,
+      message: "Failed to register user",
+      type: "internal",
+    };
+  }
+};
+
 export const authService = {
   loginUser,
   inviteUser,
+  registerViaInvite,
 };
