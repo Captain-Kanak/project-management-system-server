@@ -4,47 +4,8 @@ import { prisma } from "@/src/lib/prisma";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import { Prisma } from "@/generated/prisma/client";
 
 const MAX_RETRIES = 5;
-
-const inviteUser = async ({
-  email,
-  role,
-}: {
-  email: string;
-  role: UserRoles;
-}) => {
-  try {
-    const token = crypto.randomBytes(32).toString("hex");
-    const hashedToken = await bcrypt.hash(token, 10);
-
-    await prisma.invite.create({
-      data: {
-        email,
-        role,
-        token: hashedToken,
-        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      },
-    });
-
-    const link = `${envConfig.origin_url}/register?token=${token}`;
-
-    return {
-      success: true,
-      message: "User invite link created successfully",
-      data: { link },
-    };
-  } catch (error) {
-    console.log("Failed to invite user", error);
-
-    return {
-      success: false,
-      message: "Failed to invite user",
-      type: "internal",
-    };
-  }
-};
 
 const loginUser = async ({
   email,
@@ -72,7 +33,7 @@ const loginUser = async ({
       return {
         success: false,
         message: "User is not active",
-        type: "unauthorized",
+        type: "forbidden",
       };
     }
 
@@ -122,7 +83,45 @@ const loginUser = async ({
   }
 };
 
+const inviteUser = async ({
+  email,
+  role,
+}: {
+  email: string;
+  role: UserRoles;
+}) => {
+  try {
+    const token = crypto.randomBytes(32).toString("hex");
+    const hashedToken = await bcrypt.hash(token, 10);
+
+    await prisma.invite.create({
+      data: {
+        email,
+        role,
+        token: hashedToken,
+        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      },
+    });
+
+    const link = `${envConfig.origin_url}/register?token=${token}`;
+
+    return {
+      success: true,
+      message: "User invite link created successfully",
+      data: { link },
+    };
+  } catch (error) {
+    console.log("Failed to invite user", error);
+
+    return {
+      success: false,
+      message: "Failed to invite user",
+      type: "internal",
+    };
+  }
+};
+
 export const authService = {
-  inviteUser,
   loginUser,
+  inviteUser,
 };

@@ -12,14 +12,7 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-app.get("/api", (req: Request, res: Response) => {
-  return res.status(200).json({
-    success: true,
-    message: "Welcome to the Project Management System - API Route",
-  });
-});
-
-app.use("/api/auth", authRouter);
+app.use("/auth", authRouter);
 
 app.use((req: Request, res: Response) => {
   return res.status(404).json({
