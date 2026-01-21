@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx tsx watch src/server.ts",
-    "prisma:mi": "npx prisma migrate dev",
-    "prisma:ge": "npx prisma generate"
+    "pri:mi": "npx prisma migrate dev",
+    "pri:ge": "npx prisma generate"
   },
   "keywords": [],
   "author": "",

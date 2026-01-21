@@ -1,7 +1,28 @@
+import { UserRoles, UserStatus } from "@/generated/prisma/enums";
 import { envConfig } from "@/src/config/envConfig";
 import { prisma } from "@/src/lib/prisma";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
+
+const inviteUser = async ({
+  email,
+  role,
+}: {
+  email: string;
+  role: UserRoles;
+}) => {
+  try {
+    const token = crypto.randomBytes(32).toString("hex");
+  } catch (error) {
+    console.log("Failed to invite user", error);
+
+    return {
+      success: false,
+      message: "Failed to invite user",
+    };
+  }
+};
 
 const loginUser = async ({
   email,
@@ -22,6 +43,14 @@ const loginUser = async ({
         success: false,
         message: "User not exist with this email",
         type: "not-found",
+      };
+    }
+
+    if (user.status !== UserStatus.ACTIVE) {
+      return {
+        success: false,
+        message: "User is not active",
+        type: "unauthorized",
       };
     }
 
@@ -72,5 +101,6 @@ const loginUser = async ({
 };
 
 export const authService = {
+  inviteUser,
   loginUser,
 };

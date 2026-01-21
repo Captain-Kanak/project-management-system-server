@@ -1,6 +1,18 @@
 import { Request, Response } from "express";
 import { authService } from "./auth.service";
 
+const inviteUser = async (req: Request, res: Response) => {
+  const { email, role } = req.body;
+  try {
+  } catch (error) {
+    console.log("Failed to invite user", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
 const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   try {
@@ -14,7 +26,14 @@ const loginUser = async (req: Request, res: Response) => {
     const result = await authService.loginUser({ email, password });
 
     if (!result.success) {
-      const statusCode = result.type === "internal" ? 500 : 401;
+      let statusCode = 500;
+
+      if (result.type === "unauthorized") {
+        statusCode = 403;
+      } else if (result.type === "not-found") {
+        statusCode = 401;
+      }
+
       return res.status(statusCode).json(result);
     }
 
@@ -30,5 +49,6 @@ const loginUser = async (req: Request, res: Response) => {
 };
 
 export const authController = {
+  inviteUser,
   loginUser,
 };
