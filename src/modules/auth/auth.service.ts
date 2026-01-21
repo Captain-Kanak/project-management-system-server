@@ -150,7 +150,6 @@ const registerViaInvite = async ({
       return {
         success: false,
         message: "Invalid invite token",
-        type: "not-found",
       };
     }
 

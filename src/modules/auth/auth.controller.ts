@@ -76,12 +76,7 @@ const registerViaInvite = async (req: Request, res: Response) => {
     });
 
     if (!result.success) {
-      let statusCode = 500;
-
-      if (result.type === "not-found") {
-        statusCode = 404;
-      }
-
+      const statusCode = result.type === "internal" ? 500 : 400;
       return res.status(statusCode).json(result);
     }
 
