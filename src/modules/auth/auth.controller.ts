@@ -4,6 +4,13 @@ import { authService } from "./auth.service";
 const inviteUser = async (req: Request, res: Response) => {
   const { email, role } = req.body;
   try {
+    const result = await authService.inviteUser({ email, role });
+
+    if (!result.success) {
+      return res.status(500).json(result);
+    }
+
+    return res.status(200).json(result);
   } catch (error) {
     console.log("Failed to invite user", error);
 

@@ -7,5 +7,5 @@ export const envConfig = {
   datebase_url: process.env.DATABASE_URL,
   port: process.env.PORT,
   jwt_secret: process.env.JWT_SECRET,
-  token_expires_in: process.env.TOKEN_EXPIRES_IN,
+  origin_url: process.env.ORIGIN_URL,
 };

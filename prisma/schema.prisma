@@ -41,8 +41,6 @@ model User {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   projects  Project[]
-
-  @@index([email])
 }
 
 model Invite {
@@ -53,8 +51,6 @@ model Invite {
   expiresAt  DateTime
   acceptedAt DateTime?
   createdAt  DateTime  @default(now())
-
-  @@index([token])
 }
 
 model Project {
