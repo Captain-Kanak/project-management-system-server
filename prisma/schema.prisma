@@ -40,6 +40,8 @@ model User {
   invitedAt DateTime   @default(now())
   createdAt DateTime   @default(now())
   projects  Project[]
+
+  @@index([email])
 }
 
 model Invite {
@@ -61,4 +63,6 @@ model Project {
   user        User          @relation(fields: [createdBy], references: [id], onDelete: Cascade)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+
+  @@index([createdBy])
 }

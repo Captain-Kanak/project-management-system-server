@@ -1,4 +1,5 @@
 import express, { Application, json, Request, Response } from "express";
+import { authRouter } from "./modules/auth/auth.route";
 
 export const app: Application = express();
 
@@ -17,6 +18,8 @@ app.get("/api", (req: Request, res: Response) => {
     message: "Welcome to the Project Management System - API Route",
   });
 });
+
+app.use("/api/auth", authRouter);
 
 app.use((req: Request, res: Response) => {
   return res.status(404).json({
