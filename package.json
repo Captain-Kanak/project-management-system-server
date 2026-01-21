@@ -7,10 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx tsx watch src/server.ts",
     "pri:mi": "npx prisma migrate dev",
-    "pri:ge": "npx prisma generate"
+    "pri:ge": "npx prisma generate",
+    "seed:admin": "npx tsx src/seeding/seedAdmin.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "Kanak",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
