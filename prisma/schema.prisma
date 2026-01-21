@@ -24,6 +24,12 @@ enum UserStatus {
   INACTIVE
 }
 
+enum ProjectStatus {
+  ACTIVE
+  ARCHIVED
+  DELETED
+}
+
 model User {
   id        String     @id @default(uuid())
   name      String
@@ -33,4 +39,26 @@ model User {
   status    UserStatus @default(ACTIVE)
   invitedAt DateTime   @default(now())
   createdAt DateTime   @default(now())
+  projects  Project[]
+}
+
+model Invite {
+  id         String    @id @default(uuid())
+  email      String    @unique
+  role       UserRoles @default(STAFF)
+  token      String
+  expiresAt  DateTime
+  acceptedAt DateTime
+}
+
+model Project {
+  id          String        @id @default(uuid())
+  name        String
+  description String
+  status      ProjectStatus @default(ACTIVE)
+  isDeleted   Boolean       @default(false)
+  createdBy   String
+  user        User          @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 }
