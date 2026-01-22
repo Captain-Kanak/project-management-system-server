@@ -1,6 +1,7 @@
 import express, { Application, json, Request, Response } from "express";
 import { authRouter } from "./modules/auth/auth.route";
 import { userRouter } from "./modules/user/user.route";
+import { projectRouter } from "./modules/project/project.route";
 
 export const app: Application = express();
 
@@ -16,6 +17,8 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/auth", authRouter);
 
 app.use("/users", userRouter);
+
+app.use("/projects", projectRouter);
 
 app.use((req: Request, res: Response) => {
   return res.status(404).json({
