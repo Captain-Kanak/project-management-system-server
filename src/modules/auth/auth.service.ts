@@ -146,6 +146,7 @@ const registerViaInvite = async ({
 }) => {
   try {
     const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const invite = await prisma.invite.findUnique({
       where: {
@@ -167,35 +168,37 @@ const registerViaInvite = async ({
       };
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const userResult = await prisma.$transaction(async (trx) => {
+      const user = await trx.user.create({
+        data: {
+          name,
+          email: invite.email,
+          password: hashedPassword,
+          role: invite.role,
+          invitedAt: invite.createdAt,
+        },
+      });
 
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email: invite.email,
-        password: hashedPassword,
-        role: invite.role,
-        invitedAt: invite.createdAt,
-      },
-    });
+      await trx.invite.update({
+        where: {
+          token: hashedToken,
+        },
+        data: {
+          acceptedAt: new Date(),
+        },
+      });
 
-    await prisma.invite.update({
-      where: {
-        token: hashedToken,
-      },
-      data: {
-        acceptedAt: new Date(),
-      },
+      return user;
     });
 
     return {
       success: true,
       message: "User registered successfully",
       data: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
+        id: userResult.id,
+        name: userResult.name,
+        email: userResult.email,
+        role: userResult.role,
       },
     };
   } catch (error) {

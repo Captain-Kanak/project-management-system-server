@@ -1,11 +1,19 @@
 import { Router } from "express";
 import { projectController } from "./project.controller";
 import { authrorize } from "@/src/middleware/authorize";
+import { authMiddleware } from "@/src/middleware/authMiddleware";
+import { UserRoles } from "@/generated/prisma/enums";
 
 const router = Router();
 
 router.post("/", authrorize(), projectController.createProject);
 
 router.get("/", authrorize(), projectController.getProjects);
+
+router.patch(
+  "/:id",
+  authMiddleware(UserRoles.ADMIN),
+  projectController.updateProject,
+);
 
 export { router as projectRouter };

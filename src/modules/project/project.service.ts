@@ -1,3 +1,4 @@
+import { Project } from "@/generated/prisma/client";
 import { prisma } from "@/src/lib/prisma";
 
 const createProject = async ({
@@ -73,7 +74,33 @@ const getProjects = async () => {
   }
 };
 
+const updateProject = async (id: string, payload: Project) => {
+  try {
+    const project = await prisma.project.update({
+      where: {
+        id,
+      },
+      data: payload,
+    });
+
+    return {
+      success: true,
+      message: "Project updated successfully",
+      data: project,
+    };
+  } catch (error) {
+    console.log("Failed to update project", error);
+
+    return {
+      success: false,
+      message: "Failed to update project",
+      type: "internal",
+    };
+  }
+};
+
 export const projectService = {
   createProject,
   getProjects,
+  updateProject,
 };
