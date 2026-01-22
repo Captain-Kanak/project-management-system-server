@@ -49,7 +49,7 @@ const inviteUser = async (req: Request, res: Response) => {
       return res.status(statusCode).json(result);
     }
 
-    return res.status(200).json(result);
+    return res.status(201).json(result);
   } catch (error) {
     console.log("Failed to invite user", error);
 
@@ -81,7 +81,7 @@ const registerViaInvite = async (req: Request, res: Response) => {
       return res.status(statusCode).json(result);
     }
 
-    return res.status(200).json(result);
+    return res.status(201).json(result);
   } catch (error) {
     console.log("Failed to register user", error);
 
