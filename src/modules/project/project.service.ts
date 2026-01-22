@@ -1,4 +1,4 @@
-import { Project } from "@/generated/prisma/client";
+import { Project, ProjectStatus } from "@/generated/prisma/client";
 import { prisma } from "@/src/lib/prisma";
 
 const createProject = async ({
@@ -99,8 +99,51 @@ const updateProject = async (id: string, payload: Project) => {
   }
 };
 
+const deleteProject = async (id: string) => {
+  try {
+    const project = await prisma.project.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!project) {
+      return {
+        success: false,
+        message: "Project not found",
+        type: "not-found",
+      };
+    }
+
+    const softDeleteProject = await prisma.project.update({
+      where: {
+        id,
+      },
+      data: {
+        status: ProjectStatus.DELETED,
+        isDeleted: true,
+      },
+    });
+
+    return {
+      success: true,
+      message: "Project deleted successfully",
+      data: softDeleteProject,
+    };
+  } catch (error) {
+    console.log("Failed to delete project", error);
+
+    return {
+      success: false,
+      message: "Failed to delete project",
+      type: "internal",
+    };
+  }
+};
+
 export const projectService = {
   createProject,
   getProjects,
   updateProject,
+  deleteProject,
 };

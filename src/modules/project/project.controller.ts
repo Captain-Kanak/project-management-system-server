@@ -84,8 +84,29 @@ const updateProject = async (req: Request, res: Response) => {
   }
 };
 
+const deleteProject = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const result = await projectService.deleteProject(id as string);
+
+    if (!result.success) {
+      return res.status(500).json(result);
+    }
+
+    return res.status(200).json(result);
+  } catch (error) {
+    console.log("Failed to delete project", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
 export const projectController = {
   createProject,
   getProjects,
   updateProject,
+  deleteProject,
 };

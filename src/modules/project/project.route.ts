@@ -16,4 +16,10 @@ router.patch(
   projectController.updateProject,
 );
 
+router.delete(
+  "/:id",
+  authMiddleware(UserRoles.ADMIN),
+  projectController.deleteProject,
+);
+
 export { router as projectRouter };
