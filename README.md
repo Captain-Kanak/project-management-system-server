@@ -205,8 +205,7 @@ npm run dev
 
 ## 👤 Author
 
-Kanak Ray
-
+- Kanak Ray
 - Full Stack Developer
 - (Node.js · Express.js · TypeScript · PostgreSQL · Prisma)
 
