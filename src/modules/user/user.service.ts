@@ -1,4 +1,4 @@
-import { UserRoles } from "@/generated/prisma/enums";
+import { UserRoles, UserStatus } from "@/generated/prisma/enums";
 import { prisma } from "@/src/lib/prisma";
 
 const getUsers = async ({
@@ -46,7 +46,13 @@ const getUsers = async ({
   }
 };
 
-const updateRole = async ({ id, role }: { id: string; role: UserRoles }) => {
+const updateUserRole = async ({
+  id,
+  role,
+}: {
+  id: string;
+  role: UserRoles;
+}) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
@@ -96,7 +102,64 @@ const updateRole = async ({ id, role }: { id: string; role: UserRoles }) => {
   }
 };
 
+const updateUserStaus = async ({
+  id,
+  status,
+}: {
+  id: string;
+  status: UserStatus;
+}) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        status: true,
+      },
+    });
+
+    if (!user) {
+      return {
+        success: false,
+        message: "User not found",
+        type: "not-found",
+      };
+    }
+
+    if (user.status === status) {
+      return {
+        success: true,
+        message: "User already has the same status",
+      };
+    }
+
+    await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        status,
+      },
+    });
+
+    return {
+      success: true,
+      message: "User status updated successfully",
+    };
+  } catch (error) {
+    console.log("Failed to update user status", error);
+
+    return {
+      success: false,
+      message: "Failed to update user status",
+    };
+  }
+};
+
 export const userService = {
   getUsers,
-  updateRole,
+  updateUserRole,
+  updateUserStaus,
 };
