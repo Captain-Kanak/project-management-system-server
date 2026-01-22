@@ -91,6 +91,20 @@ const inviteUser = async ({
   role: UserRoles;
 }) => {
   try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (user) {
+      return {
+        success: false,
+        message: "User already exist with this email",
+        type: "conflict",
+      };
+    }
+
     const token = crypto.randomBytes(32).toString("hex");
     const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
