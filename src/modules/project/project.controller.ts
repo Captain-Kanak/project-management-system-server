@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { projectService } from "./project.service";
 import { Project } from "@/generated/prisma/client";
+import paginationHelper from "@/src/helpers/pagination";
 
 const createProject = async (req: Request, res: Response) => {
   const { name, description } = req.body;
@@ -42,8 +43,17 @@ const createProject = async (req: Request, res: Response) => {
 };
 
 const getProjects = async (req: Request, res: Response) => {
+  const { page, limit } = req.query;
   try {
-    const result = await projectService.getProjects();
+    const pagination = paginationHelper({
+      page: page as string,
+      limit: limit as string,
+    });
+
+    const result = await projectService.getProjects({
+      limit: pagination.limit,
+      offset: pagination.offset,
+    });
 
     if (!result.success) {
       return res.status(500).json(result);

@@ -35,9 +35,23 @@ const createProject = async ({
   }
 };
 
-const getProjects = async () => {
+const getProjects = async ({
+  limit,
+  offset,
+}: {
+  limit: number;
+  offset: number;
+}) => {
   try {
     const projects = await prisma.project.findMany({
+      skip: offset,
+      take: limit,
+      where: {
+        status: ProjectStatus.ACTIVE,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
       include: {
         user: {
           select: {

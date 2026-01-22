@@ -1,6 +1,6 @@
 interface PaginationInput {
-  page: string;
-  limit: string;
+  page?: string;
+  limit?: string;
 }
 
 interface PaginationResult {

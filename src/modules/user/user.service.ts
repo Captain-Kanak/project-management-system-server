@@ -75,7 +75,7 @@ const updateUserRole = async ({
     if (user.role === role) {
       return {
         success: true,
-        message: "User already has the same role",
+        message: `User already has the (${role}) role`,
       };
     }
 
@@ -90,7 +90,7 @@ const updateUserRole = async ({
 
     return {
       success: true,
-      message: "User role updated successfully",
+      message: `User role (${role}) updated successfully`,
     };
   } catch (error) {
     console.log("Failed to update user role", error);
@@ -131,7 +131,7 @@ const updateUserStaus = async ({
     if (user.status === status) {
       return {
         success: true,
-        message: "User already has the same status",
+        message: `User already has the (${status}) status`,
       };
     }
 
@@ -146,7 +146,7 @@ const updateUserStaus = async ({
 
     return {
       success: true,
-      message: "User status updated successfully",
+      message: `User status (${status}) updated successfully`,
     };
   } catch (error) {
     console.log("Failed to update user status", error);

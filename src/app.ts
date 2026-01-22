@@ -2,6 +2,7 @@ import express, { Application, json, Request, Response } from "express";
 import { authRouter } from "./modules/auth/auth.route";
 import { userRouter } from "./modules/user/user.route";
 import { projectRouter } from "./modules/project/project.route";
+import { url } from "node:inspector";
 
 export const app: Application = express();
 
@@ -25,6 +26,6 @@ app.use((req: Request, res: Response) => {
     success: false,
     message: "404 Route not found",
     method: req.method,
-    originalUrl: req.originalUrl,
+    route: req.originalUrl,
   });
 });
