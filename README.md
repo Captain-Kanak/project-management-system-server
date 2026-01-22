@@ -33,38 +33,6 @@ This backend system supports:
 
 ---
 
-## 🧱 Project Structure (Modular Pattern)
-
-prisma/
-├── schema.prisma # Database schema
-├── migrations/ # Prisma migrations
-src/
-├── config/ # Environment configuration
-├── helpers/ # Shared helpers (e.g. pagination)
-├── lib/ # Prisma client instance
-├── middlewares/ # Authentication, RBAC, error handling
-├── modules/
-│ ├── auth/ # Auth module
-│ │ ├── auth.route.ts
-│ │ ├── auth.controller.ts
-│ │ └── auth.service.ts
-│ ├── project/ # Project module
-│ │ ├── project.route.ts
-│ │ ├── project.controller.ts
-│ │ └── project.service.ts
-│ └── user/ # User module
-│ ├── user.route.ts
-│ ├── user.controller.ts
-│ └── user.service.ts
-├── seeding/ # Seed Admin helpers
-├── types/ # Shared TypeScript types & interfaces
-├── app.ts # Express app configuration
-└── server.ts # Application entry point
-
-Each module contains its own routes, controllers, services, and validation logic.
-
----
-
 ## Database Schema
 
 ### User Table
@@ -186,29 +154,42 @@ Prerequisites:
 
 Clone Repository:
 
-- $ git clone ["repository-url"](https://github.com/Captain-Kanak/project-management-system-server)
-- $ cd project-management-system-server
+```bash
+git clone < repository link >
+cd project-management-system-server
+```
 
 Install Dependencies:
 
-- $ npm install
+```bash
+npm install
+```
 
 Environment Variables:
-Create .env file:
-`DATABASE_URL=postgresql://USER:PASSWORD@HOST/db?sslmode=verify-full
+Create a `.env` file in the root of your project and add the following:
+
+```env
+DATABASE_URL=postgresql://USER:PASSWORD@HOST/db?sslmode=verify-full
 JWT_SECRET=your_secure_jwt_secret
-PORT=5000`
+PORT=5000
+```
 
 ---
 
 Run Prisma:
-`npx prisma migrate dev
-npx prisma generate`
+
+```bash
+npx prisma migrate dev
+npx prisma generate
+```
 
 ---
 
 Start Server:
-`npm run dev`
+
+```bash
+npm run dev
+```
 
 ## 🧪 Application Flow (Quick Test)
 
@@ -225,11 +206,16 @@ Start Server:
 ## 👤 Author
 
 Kanak Ray
-Full Stack Developer
-(Node.js · Express.js · TypeScript · PostgreSQL · Prisma)
+
+- Full Stack Developer
+- (Node.js · Express.js · TypeScript · PostgreSQL · Prisma)
 
 ---
 
 ## 📄 License
 
 This project is intended for educational and demonstration purposes.
+
+```
+
+```
