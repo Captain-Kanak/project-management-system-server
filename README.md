@@ -215,7 +215,3 @@ Kanak Ray
 ## 📄 License
 
 This project is intended for educational and demonstration purposes.
-
-```
-
-```

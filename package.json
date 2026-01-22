@@ -5,10 +5,12 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx tsx watch src/server.ts",
-    "prisma:migrate": "npx prisma migrate dev",
-    "prisma:generate": "npx prisma generate",
-    "seed:admin": "npx tsx src/seeding/seedAdmin.ts"
+    "dev": "tsx watch src/server.ts",
+    "build": "prisma generate && tsc",
+    "start": "node dist/server.js",
+    "prisma:migrate": "prisma migrate deploy",
+    "prisma:generate": "prisma generate",
+    "seed:admin": "tsx src/seeding/seedAdmin.ts"
   },
   "keywords": [],
   "author": "Kanak",
