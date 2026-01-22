@@ -34,6 +34,46 @@ const createProject = async ({
   }
 };
 
+const getProjects = async () => {
+  try {
+    const projects = await prisma.project.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+          },
+        },
+      },
+    });
+
+    if (projects.length === 0) {
+      return {
+        success: true,
+        message: "No projects found",
+        data: [],
+      };
+    }
+
+    return {
+      success: true,
+      message: "Projects fetched successfully",
+      data: projects,
+    };
+  } catch (error) {
+    console.log("Failed to get projects", error);
+
+    return {
+      success: false,
+      message: "Failed to get projects",
+      type: "internal",
+    };
+  }
+};
+
 export const projectService = {
   createProject,
+  getProjects,
 };

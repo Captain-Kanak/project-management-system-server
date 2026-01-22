@@ -40,6 +40,26 @@ const createProject = async (req: Request, res: Response) => {
   }
 };
 
+const getProjects = async (req: Request, res: Response) => {
+  try {
+    const result = await projectService.getProjects();
+
+    if (!result.success) {
+      return res.status(500).json(result);
+    }
+
+    return res.status(200).json(result);
+  } catch (error) {
+    console.log("Failed to get projects", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
 export const projectController = {
   createProject,
+  getProjects,
 };

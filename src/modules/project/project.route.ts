@@ -6,4 +6,6 @@ const router = Router();
 
 router.post("/", authrorize(), projectController.createProject);
 
+router.get("/", authrorize(), projectController.getProjects);
+
 export { router as projectRouter };
