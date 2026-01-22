@@ -1,6 +1,6 @@
-import { UserRoles } from "@/generated/prisma/enums";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { envConfig } from "../config/envConfig";
+import { UserRoles } from "@prisma/client";
 
 export const authMiddleware = (...roles: UserRoles[]) => {
   return async (req: any, res: any, next: any) => {

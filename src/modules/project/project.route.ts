@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { projectController } from "./project.controller";
-import { authrorize } from "@/src/middleware/authorize";
-import { authMiddleware } from "@/src/middleware/authMiddleware";
-import { UserRoles } from "@/generated/prisma/enums";
+import { authrorize } from "@/middleware/authorize";
+import { authMiddleware } from "@/middleware/authMiddleware";
+import { UserRoles } from "@prisma/client";
 
 const router = Router();
 

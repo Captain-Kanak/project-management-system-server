@@ -1,7 +1,7 @@
-import paginationHelper from "@/src/helpers/pagination";
+import paginationHelper from "@/helpers/pagination";
 import { Request, Response } from "express";
 import { userService } from "./user.service";
-import { UserRoles, UserStatus } from "@/generated/prisma/enums";
+import { UserRoles, UserStatus } from "@prisma/client";
 
 const getUsers = async (req: Request, res: Response) => {
   const { page, limit } = req.query;

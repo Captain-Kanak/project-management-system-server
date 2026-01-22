@@ -1,5 +1,5 @@
-import { Project, ProjectStatus } from "@/generated/prisma/client";
-import { prisma } from "@/src/lib/prisma";
+import { Project, ProjectStatus } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 
 const createProject = async ({
   userId,

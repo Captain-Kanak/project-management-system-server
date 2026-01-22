@@ -1,4 +1,3 @@
-import { UserRoles } from "@/generated/prisma/enums";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { envConfig } from "../config/envConfig";
 

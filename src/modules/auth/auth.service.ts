@@ -1,11 +1,9 @@
-import { UserRoles, UserStatus } from "@/generated/prisma/enums";
-import { envConfig } from "@/src/config/envConfig";
-import { prisma } from "@/src/lib/prisma";
+import { envConfig } from "@/config/envConfig";
+import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-
-const MAX_RETRIES = 5;
+import { UserRoles, UserStatus } from "@prisma/client";
 
 const loginUser = async ({
   email,

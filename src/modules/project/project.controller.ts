@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { projectService } from "./project.service";
-import { Project } from "@/generated/prisma/client";
-import paginationHelper from "@/src/helpers/pagination";
+import { Project } from "@prisma/client";
+import paginationHelper from "@/helpers/pagination";
 
 const createProject = async (req: Request, res: Response) => {
   const { name, description } = req.body;

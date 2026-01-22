@@ -1,5 +1,5 @@
-import { UserRoles } from "@/generated/prisma/enums";
-import { authMiddleware } from "@/src/middleware/authMiddleware";
+import { UserRoles } from "@prisma/client";
+import { authMiddleware } from "@/middleware/authMiddleware";
 import { Router } from "express";
 import { userController } from "./user.controller";
 

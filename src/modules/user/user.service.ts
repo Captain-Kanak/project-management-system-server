@@ -1,5 +1,5 @@
-import { UserRoles, UserStatus } from "@/generated/prisma/enums";
-import { prisma } from "@/src/lib/prisma";
+import { UserRoles, UserStatus } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 
 const getUsers = async ({
   limit,
