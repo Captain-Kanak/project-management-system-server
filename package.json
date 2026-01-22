@@ -1,19 +1,17 @@
 {
   "name": "project-management-system-server",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "main": "dist/server.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/server.ts",
-    "build": "npx prisma generate && prisma migrate deploy && tsc",
+    "build": "prisma migrate deploy && prisma generate && tsc",
     "start": "node dist/server.js",
+    "postinstall": "prisma generate",
     "seed:admin": "tsx src/seeding/seedAdmin.ts"
   },
-  "keywords": [],
   "author": "Kanak",
   "license": "ISC",
-  "type": "module",
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
@@ -28,7 +26,7 @@
     "@prisma/client": "^7.3.0",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.2.3",
-    "express": "^5.2.1",
+    "express": "^4.21.2",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.17.2"
   }
