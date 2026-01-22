@@ -7,4 +7,10 @@ const router = Router();
 
 router.get("/", authMiddleware(UserRoles.ADMIN), userController.getUsers);
 
+router.patch(
+  "/:id/role",
+  authMiddleware(UserRoles.ADMIN),
+  userController.updateRole,
+);
+
 export { router as userRouter };
