@@ -19,6 +19,7 @@ const getUsers = async ({
         role: true,
         status: true,
         invitedAt: true,
+        createdAt: true,
       },
     });
 

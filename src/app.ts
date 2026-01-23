@@ -1,4 +1,5 @@
 import express, { Application, json, Request, Response } from "express";
+import cors from "cors";
 import { authRouter } from "./modules/auth/auth.route";
 import { userRouter } from "./modules/user/user.route";
 import { projectRouter } from "./modules/project/project.route";
@@ -6,6 +7,13 @@ import { projectRouter } from "./modules/project/project.route";
 export const app: Application = express();
 
 app.use(json());
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 
 app.get("/", (req: Request, res: Response) => {
   return res.status(200).json({

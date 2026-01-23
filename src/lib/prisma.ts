@@ -1,6 +1,6 @@
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "@prisma/client";
 import { envConfig } from "../config/envConfig";
+import { PrismaClient } from "@prisma/client";
 
 const connectionString = `${envConfig.datebase_url}`;
 

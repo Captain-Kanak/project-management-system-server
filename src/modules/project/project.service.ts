@@ -48,6 +48,7 @@ const getProjects = async ({
       take: limit,
       where: {
         status: ProjectStatus.ACTIVE,
+        isDeleted: false,
       },
       orderBy: {
         createdAt: "desc",
@@ -55,7 +56,6 @@ const getProjects = async ({
       include: {
         user: {
           select: {
-            id: true,
             name: true,
             email: true,
             role: true,
