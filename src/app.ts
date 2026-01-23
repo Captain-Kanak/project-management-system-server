@@ -1,16 +1,19 @@
 import express, { Application, json, Request, Response } from "express";
 import cors from "cors";
-import { authRouter } from "./modules/auth/auth.route";
-import { userRouter } from "./modules/user/user.route";
-import { projectRouter } from "./modules/project/project.route";
+import { authRouter } from "./modules/auth/authRoute.js";
+import { userRouter } from "./modules/user/userRoute.js";
+import { projectRouter } from "./modules/project/projectRoute.js";
 
-export const app: Application = express();
+const app: Application = express();
 
 app.use(json());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://project-management-system-app-chi.vercel.app",
+    ],
     credentials: true,
   }),
 );
@@ -36,3 +39,5 @@ app.use((req: Request, res: Response) => {
     route: req.originalUrl,
   });
 });
+
+export default app;

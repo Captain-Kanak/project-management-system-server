@@ -1,5 +1,5 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { envConfig } from "../config/envConfig";
+import { envConfig } from "../config/envConfig.js";
 
 export const authrorize = () => {
   return async (req: any, res: any, next: any) => {

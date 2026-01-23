@@ -1,9 +1,9 @@
-import { envConfig } from "@/config/envConfig";
-import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { UserRoles, UserStatus } from "@prisma/client";
+import { prisma } from "../../lib/prisma.js";
+import { envConfig } from "../../config/envConfig.js";
 
 const loginUser = async ({
   email,

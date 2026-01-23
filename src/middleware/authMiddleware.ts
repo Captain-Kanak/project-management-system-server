@@ -1,5 +1,5 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { envConfig } from "../config/envConfig";
+import { envConfig } from "../config/envConfig.js";
 import { UserRoles } from "@prisma/client";
 
 export const authMiddleware = (...roles: UserRoles[]) => {

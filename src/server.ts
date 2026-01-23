@@ -1,6 +1,6 @@
-import { app } from "./app";
-import { envConfig } from "./config/envConfig";
-import { prisma } from "./lib/prisma";
+import app from "./app.js";
+import { envConfig } from "./config/envConfig.js";
+import { prisma } from "./lib/prisma.js";
 
 const port = envConfig.port || 5000;
 
