@@ -174,6 +174,9 @@ JWT_SECRET=your_secure_jwt_secret
 PORT=5000
 ```
 
+Admin Eamil: kanakroy835@gmail.com
+Password: admin123
+
 ---
 
 Run Prisma:
